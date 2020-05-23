@@ -1,38 +1,54 @@
 import { Figure } from './figure.js'
 
 const GRAVITY = -0.1
+const RADIUS = 30
 let canvas = document.getElementById('canvas')
 let height = canvas.height, width = canvas.width
 let ctx = canvas.getContext('2d')
 let figures = []
+let tick = 0
 
+
+function getStyle(segments) {
+    switch(segments) {
+        case 3: return '#00FF00'
+        case 4: return '#FF0060'
+        case 5: return '#00FFFF'
+        case 6: return '#FFFF00'
+        default: throw new Error('Unexpected number of segments')
+    }
+}
+
+function randomFigure() {
+    let left = Math.random() < 0.5
+    let cx = left ? 0 : width
+    let cy = 200 + Math.random() * (height - 300)
+    let vx = 1 + Math.random() * 2
+    if (!left) vx = -vx
+    let vy = 2 + Math.random() * 4
+    let vangle = 0.04 - Math.random() * 0.08
+    let segments = 3 + Math.floor(Math.random() * 4)
+    return new Figure({
+        cx, cy, vx, vy, vangle,
+        r: RADIUS, segments, style: getStyle(segments)
+    })
+}
 
 function startGame() {
+    tick = 0
     ctx.scale(1, -1)
     ctx.translate(0, -height)
-    figures.push(new Figure({
-        x: 0, y: 400, vx: 2, vy: 3, vangle: 0.01,
-        r: 50, segments: 3, style: '#00FF00'
-    }))
-    figures.push(new Figure({
-        x: width, y: 400, vx: -2, vy: 3, vangle: -0.01,
-        r: 50, segments: 4, style: '#FF0060'
-    }))
-    figures.push(new Figure({
-        x: 0, y: 200, vx: 3, vy: 6, vangle: -0.01,
-        r: 50, segments: 5, style: '#00FFFF'
-    }))
-    figures.push(new Figure({
-        x: width, y: 200, vx: -3, vy: 6, vangle: 0.01,
-        r: 50, segments: 6, style: '#FFFF00'
-    }))
 }
 
 function stepGame() {
+    tick++
+    if (tick % 30 == 0)
+        figures.push(randomFigure())
     for (let f of figures) {
         f.vy += GRAVITY
         f.step()
     }
+    figures = figures.filter(f => f.cy > 0)
 }
 
 function drawGame() {

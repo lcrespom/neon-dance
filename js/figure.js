@@ -3,10 +3,10 @@ import { neonPoly } from './draw.js'
 
 export class Figure {
     constructor({
-        x, y, vx = 0, vy = 0, r, angle = 0, vangle = 0, segments, style
+        cx, cy, vx = 0, vy = 0, r, angle = 0, vangle = 0, segments, style
     }) {
-        this.cx = x
-        this.cy = y
+        this.cx = cx
+        this.cy = cy
         this.r = r
         this.angle = angle
         this.segments = segments
