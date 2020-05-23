@@ -12,7 +12,9 @@ function stepGame() {
 }
 
 function drawGame() {
-    neonPoly(ctx, 300, 200, 50, 4, Math.PI / 8, 'red')
+    neonPoly(ctx, 150, 200, 50, 3, 0, '#00FF00')
+    neonPoly(ctx, 300, 200, 50, 4, 0 * Math.PI / 8, '#FF0060')
+    neonPoly(ctx, 450, 200, 50, 5, 0, '#00FFFF')
 }
 
 function animateFrame() {
