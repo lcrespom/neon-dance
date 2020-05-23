@@ -14,7 +14,7 @@ export class Figure {
         this.vx = vx
         this.vy = vy
         this.vangle = vangle
-        this.glow = { width: 5, blur: 4 }
+        this.glow = { width: 6, blur: 5 }
     }
 
     step() {
