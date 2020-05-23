@@ -1,14 +1,14 @@
 {
   "name": "dancing-polygons",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dancing neon polygons game",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "live-server"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["videogame", "game", "canvas"],
+  "author": "Luis Crespo, lcrespom@gmail.com",
   "license": "ISC",
   "dependencies": {
     "live-server": "^1.2.1"
