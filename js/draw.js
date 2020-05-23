@@ -10,7 +10,7 @@
  */
 export function drawPoly(ctx, cx, cy, r, sides, angle, style) {
     let angleInc = 2 * Math.PI / sides
-    angle -= Math.PI / 2 + angleInc / 2
+    angle += Math.PI / 2 + angleInc / 2
     ctx.beginPath()
     let [ x, y ] = pointAtAngle(cx, cy, r, angle)
     ctx.moveTo(x, y)
@@ -37,7 +37,7 @@ export function neonPoly(ctx, cx, cy, r, sides, angle, style) {
 
 function pointAtAngle(x, y, r, angle) {
     return [
-        x + r * Math.sin(angle),
-        y + r * Math.cos(angle)
+        x + r * Math.cos(angle),
+        y + r * Math.sin(angle)
     ]
 }
