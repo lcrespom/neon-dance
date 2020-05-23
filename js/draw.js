@@ -23,15 +23,15 @@ export function drawPoly(ctx, cx, cy, r, sides, angle) {
     ctx.stroke()
 }
 
-export function neonPoly(ctx, cx, cy, r, sides, angle, style) {
+export function neonPoly(ctx, { cx, cy, r, segments, angle, style, glow }) {
     ctx.save()
     ctx.strokeStyle = style
-    ctx.lineWidth = 5
-    ctx.filter = 'blur(4px)'
-    drawPoly(ctx, cx, cy, r, sides, angle)
+    ctx.lineWidth = glow.width
+    ctx.filter = `blur(${glow.blur}px)`
+    drawPoly(ctx, cx, cy, r, segments, angle)
     ctx.lineWidth = 2
     ctx.filter = 'none'
-    drawPoly(ctx, cx, cy, r, sides, angle)
+    drawPoly(ctx, cx, cy, r, segments, angle)
     ctx.restore()
 }
 
