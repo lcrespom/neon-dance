@@ -4,7 +4,8 @@ const GRAVITY = -0.1
 
 export class Figure {
     constructor({
-        cx, cy, vx = 0, vy = 0, r, angle = 0, vangle = 0, segments, style
+        cx, cy, vx = 0, vy = 0, r, angle = 0, vangle = 0,
+        segments, style, label
     }) {
         this.cx = cx
         this.cy = cy
@@ -12,6 +13,7 @@ export class Figure {
         this.angle = angle
         this.segments = segments
         this.style = style
+        this.label = label
         this.vx = vx
         this.vy = vy
         this.vangle = vangle
@@ -27,7 +29,14 @@ export class Figure {
     }
 
     draw(ctx) {
+        // Draw Polygon
         this.points = neonPoly(ctx, this)
+        // draw label
+        // ctx.font = '24px sans-serif'
+        // ctx.fillStyle = 'white'
+        // ctx.textAlign = 'center'
+        // ctx.textBaseline = 'middle'
+        // ctx.fillText(this.label, this.cx, this.cy)
     }
 
     getBounds() {

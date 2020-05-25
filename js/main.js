@@ -31,9 +31,11 @@ function randomFigure() {
     let vy = 2 + Math.random() * 4
     let vangle = 0.04 - Math.random() * 0.08
     let segments = 3 + Math.floor(Math.random() * 4)
+    let segments2key = [ 0, 0, 0, 'F', 'J', 'D', 'K']
     return new Figure({
         cx, cy, vx, vy, vangle,
-        r: RADIUS, segments, style: getFigureStyle(segments)
+        r: RADIUS, segments, style: getFigureStyle(segments),
+        label: segments2key[segments]
     })
 }
 
@@ -75,7 +77,7 @@ function drawGame() {
     drawBoard(ctx, tick)
 }
 
-function animateFrame(t) {
+function animateFrame() {
     stepGame()
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawGame()
