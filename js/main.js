@@ -3,11 +3,14 @@ import { neonSegment } from './draw.js'
 
 const RADIUS = 40
 const FLOOR_CEILING = 30
+const MAX_DROP_PERIOD = 60
+
 let canvas = document.getElementById('canvas')
 let height = canvas.height, width = canvas.width
 let ctx = canvas.getContext('2d')
 let figures = []
 let tick = 0
+let dropPeriod = MAX_DROP_PERIOD
 
 
 function getFigureStyle(segments) {
@@ -68,8 +71,9 @@ function figureFail(f) {
 }
 
 function stepGame() {
-    if (tick % 60 == 0)
+    if (tick % Math.floor(dropPeriod) == 0)
         figures.push(randomFigure())
+    if (dropPeriod > 4) dropPeriod -= 0.1
     tick++
     for (let f of figures) {
         let { miny, maxy } = f.getBounds()
@@ -98,7 +102,23 @@ function drawGame() {
     drawFloorAndCeiling()
 }
 
-function animateFrame() {
+
+let lastt = 0
+let fpss = []
+function calcFPS(t) {
+    let fps = 1000 / (t - lastt)
+    lastt = t
+    fpss.push(fps)
+    if (fpss.length >= 60) {
+        let avg = Math.floor(fpss.reduce((sum, v) => sum + v) / 60)
+        let prd = Math.round(dropPeriod)
+        document.getElementById('info').innerHTML =
+            `FPS: ${avg}<br>Figures: ${figures.length}<br> Drop: ${prd}`
+        fpss = []
+    }
+}
+function animateFrame(t) {
+    calcFPS(t)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     stepGame()
     drawGame()
