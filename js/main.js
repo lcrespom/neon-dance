@@ -105,7 +105,7 @@ function drawGame() {
 
 let lastt = 0
 let fpss = []
-function calcFPS(t) {
+function calcFPS(t, t1, t2) {
     let fps = 1000 / (t - lastt)
     lastt = t
     fpss.push(fps)
@@ -113,16 +113,21 @@ function calcFPS(t) {
         let avg = Math.floor(fpss.reduce((sum, v) => sum + v) / 60)
         let prd = Math.round(dropPeriod)
         document.getElementById('info').innerHTML =
-            `FPS: ${avg}<br>Figures: ${figures.length}<br> Drop: ${prd}`
+            `FPS: ${avg}<br>
+            Figures: ${figures.length}<br>
+            Drop: ${prd}<br>
+            Step time: ${((t2 - t1)).toFixed(2)}`
         fpss = []
     }
 }
 function animateFrame(t) {
-    calcFPS(t)
+    let t1 = performance.now()
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     stepGame()
     drawGame()
     requestAnimationFrame(animateFrame)
+    let t2 = performance.now()
+    calcFPS(t, t1, t2)
 }
 
 
