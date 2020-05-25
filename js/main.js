@@ -1,8 +1,7 @@
 import { Figure } from './figure.js'
-import { neonSegment } from './draw.js'
+import { CEILING, stepBoard, drawBoard } from './board.js'
 
 const RADIUS = 40
-const FLOOR_CEILING = 30
 const MAX_DROP_PERIOD = 60
 
 let canvas = document.getElementById('canvas')
@@ -26,7 +25,7 @@ function getFigureStyle(segments) {
 function randomFigure() {
     let left = Math.random() < 0.5
     let cx = left ? 0 : width
-    let cy = 200 + Math.random() * (height - 392 - RADIUS - FLOOR_CEILING)
+    let cy = 200 + Math.random() * (height - 392 - RADIUS - CEILING)
     let vx = 1 + Math.random() * 2
     if (!left) vx = -vx
     let vy = 2 + Math.random() * 4
@@ -53,21 +52,9 @@ function handleKeyDown(evt) {
 }
 
 function startGame() {
-    tick = 0
     ctx.scale(1, -1)
     ctx.translate(0, -height)
     document.body.addEventListener('keydown', handleKeyDown)
-}
-
-function figureFail(f) {
-    if (f.dead) return
-    f.dead = true
-    f.style = '#0088FF'
-    f.vx = 0
-    if (f.vy < 0)
-        f.vy = -f.vy / 2
-    else
-        f.vy = 0
 }
 
 function stepGame() {
@@ -75,31 +62,17 @@ function stepGame() {
         figures.push(randomFigure())
     if (dropPeriod > 15) dropPeriod -= 0.01
     tick++
+    stepBoard(figures, height)
     for (let f of figures) {
-        let { miny, maxy } = f.getBounds()
-        if (miny < FLOOR_CEILING || maxy > height - FLOOR_CEILING)
-            figureFail(f)
         f.step()
     }
     figures = figures.filter(f => f.cy + RADIUS > 0)
 }
 
-function drawFloorAndCeiling() {
-    let gloww = 5 + 1 * Math.sin(tick / 20)
-    neonSegment(ctx, {
-        x1: 0, y1: 40, x2: width, y2: 40,
-        style: '#FFFFFF', glow: { width: gloww, blur: 5 }
-    })
-    neonSegment(ctx, {
-        x1: 0, y1: height - 40, x2: width, y2: height - 40,
-        style: '#FFFFFF', glow: { width: gloww, blur: 5 }
-    })
-}
-
 function drawGame() {
     for (let f of figures)
         f.draw(ctx)
-    drawFloorAndCeiling()
+    drawBoard(ctx, tick)
 }
 
 function animateFrame(t) {
