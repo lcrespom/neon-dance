@@ -3,6 +3,7 @@ import { neonSegment } from './draw.js'
 
 const GRAVITY = -0.1
 const RADIUS = 40
+const FLOOR_CEILING = 30
 let canvas = document.getElementById('canvas')
 let height = canvas.height, width = canvas.width
 let ctx = canvas.getContext('2d')
@@ -23,7 +24,7 @@ function getStyle(segments) {
 function randomFigure() {
     let left = Math.random() < 0.5
     let cx = left ? 0 : width
-    let cy = 200 + Math.random() * (height - 300)
+    let cy = 200 + Math.random() * (height - 392 - RADIUS - FLOOR_CEILING)
     let vx = 1 + Math.random() * 2
     if (!left) vx = -vx
     let vy = 2 + Math.random() * 4
@@ -57,24 +58,25 @@ function startGame() {
 }
 
 function stepGame() {
-    if (tick % 200 == 0)
+    if (tick % 20 == 0)
         figures.push(randomFigure())
     tick++
     for (let f of figures) {
         f.vy += GRAVITY
         f.step()
     }
-    figures = figures.filter(f => f.cy > 0)
+    figures = figures.filter(f => f.cy + RADIUS > 0)
 }
 
 function drawFloorAndCeiling() {
+    let gloww = 5 + 1 * Math.sin(tick / 20)
     neonSegment(ctx, {
         x1: 0, y1: 40, x2: width, y2: 40,
-        style: '#FFFFFF', glow: { width: 6, blur: 5 }
+        style: '#FFFFFF', glow: { width: gloww, blur: 5 }
     })
     neonSegment(ctx, {
         x1: 0, y1: height - 40, x2: width, y2: height - 40,
-        style: '#FFFFFF', glow: { width: 6, blur: 5 }
+        style: '#FFFFFF', glow: { width: gloww, blur: 5 }
     })
 }
 

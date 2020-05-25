@@ -15,12 +15,11 @@ export function neonFigure(ctx, style, glow, drawFunction) {
     drawFunction()
     ctx.lineWidth = LINE_WIDTH
     ctx.filter = 'none'
-    drawFunction()
-
+    return drawFunction()
 }
 
 export function neonPoly(ctx, { cx, cy, r, segments, angle, style, glow }) {
-    neonFigure(ctx, style, glow, _ => {
+    return neonFigure(ctx, style, glow, _ => {
         drawPoly(ctx, cx, cy, r, segments, angle)
     })
 }
@@ -36,6 +35,7 @@ export function neonSegment(ctx, { x1, y1, x2, y2, style, glow }) {
 
 
 function drawPoly(ctx, cx, cy, r, sides, angle) {
+    let points = []
     let angleInc = 2 * Math.PI / sides
     angle += Math.PI / 2 + angleInc / 2
     ctx.beginPath()
@@ -45,9 +45,11 @@ function drawPoly(ctx, cx, cy, r, sides, angle) {
         angle += angleInc;
         [ x, y ] = pointAtAngle(cx, cy, r, angle)
         ctx.lineTo(x, y)
+        points.push({ x, y })
     }
     ctx.closePath()
     ctx.stroke()
+    return points
 }
 
 function pointAtAngle(x, y, r, angle) {

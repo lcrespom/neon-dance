@@ -21,11 +21,9 @@ export class Figure {
         this.cx += this.vx
         this.cy += this.vy
         this.angle += this.vangle
-        // this.tick++
-        // this.glow.width = 5 + Math.sin(this.tick/10) 
     }
 
     draw(ctx) {
-        neonPoly(ctx, this)
+        this.points = neonPoly(ctx, this)
     }
 }

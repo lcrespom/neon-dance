@@ -4,8 +4,8 @@ A videogama about dancing neon polygons.
 
 ## ToDo
 - [ ] Horizontal bars
-    - [ ] Bottom bar
-    - [ ] Top bar
+    - [x] Bottom bar
+    - [x] Top bar
     - [ ] Figure destruction
 - [ ] Draw key inside figure
 - [ ] Audio
@@ -15,3 +15,4 @@ A videogama about dancing neon polygons.
 - [ ] Increase difficulty over time
 - [ ] Center canvas
 - [ ] Help, game over, etc.
+- [ ] Detect skipped frames and update figure position accordingly
