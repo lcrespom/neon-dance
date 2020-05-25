@@ -1,5 +1,6 @@
 import { neonPoly } from './draw.js'
 
+const GRAVITY = -0.1
 
 export class Figure {
     constructor({
@@ -15,9 +16,11 @@ export class Figure {
         this.vy = vy
         this.vangle = vangle
         this.glow = { width: 6, blur: 5 }
+        this.points = []
     }
 
     step() {
+        this.vy += GRAVITY
         this.cx += this.vx
         this.cy += this.vy
         this.angle += this.vangle
@@ -25,5 +28,19 @@ export class Figure {
 
     draw(ctx) {
         this.points = neonPoly(ctx, this)
+    }
+
+    getBounds() {
+        let minx = Number.MAX_SAFE_INTEGER
+        let maxx = Number.MIN_SAFE_INTEGER
+        let miny = minx
+        let maxy = maxx
+        for (let p of this.points) {
+            if (p.x < minx) minx = p.x
+            else if (p.x > maxx) maxx = p.x
+            if (p.y < miny) miny = p.y
+            else if (p.y > maxy) maxy = p.y
+        }
+        return { minx, miny, maxx, maxy }
     }
 }

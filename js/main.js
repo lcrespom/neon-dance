@@ -1,7 +1,6 @@
 import { Figure } from './figure.js'
 import { neonSegment } from './draw.js'
 
-const GRAVITY = -0.1
 const RADIUS = 40
 const FLOOR_CEILING = 30
 let canvas = document.getElementById('canvas')
@@ -11,7 +10,7 @@ let figures = []
 let tick = 0
 
 
-function getStyle(segments) {
+function getFigureStyle(segments) {
     switch(segments) {
         case 3: return '#00FF00'
         case 4: return '#FF0060'
@@ -32,7 +31,7 @@ function randomFigure() {
     let segments = 3 + Math.floor(Math.random() * 4)
     return new Figure({
         cx, cy, vx, vy, vangle,
-        r: RADIUS, segments, style: getStyle(segments)
+        r: RADIUS, segments, style: getFigureStyle(segments)
     })
 }
 
@@ -57,12 +56,18 @@ function startGame() {
     document.body.addEventListener('keydown', handleKeyDown)
 }
 
+function figureFail(f) {
+    f.style = '#FFFFFF'
+}
+
 function stepGame() {
     if (tick % 20 == 0)
         figures.push(randomFigure())
     tick++
     for (let f of figures) {
-        f.vy += GRAVITY
+        let { miny } = f.getBounds()
+        if (miny < FLOOR_CEILING)
+            figureFail(f)
         f.step()
     }
     figures = figures.filter(f => f.cy + RADIUS > 0)

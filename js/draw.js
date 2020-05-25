@@ -20,7 +20,7 @@ export function neonFigure(ctx, style, glow, drawFunction) {
 
 export function neonPoly(ctx, { cx, cy, r, segments, angle, style, glow }) {
     return neonFigure(ctx, style, glow, _ => {
-        drawPoly(ctx, cx, cy, r, segments, angle)
+        return drawPoly(ctx, cx, cy, r, segments, angle)
     })
 }
 
