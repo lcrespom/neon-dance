@@ -42,7 +42,7 @@ function handleKeyDown(evt) {
     if (!segments) return
     let lowerF = { cy: 2 * height }
     for (let f of figures) {
-        if (f.segments == segments && lowerF.cy > f.cy)
+        if (!f.dead && f.segments == segments && lowerF.cy > f.cy)
             lowerF = f
     }
     if (lowerF)
@@ -57,16 +57,23 @@ function startGame() {
 }
 
 function figureFail(f) {
-    f.style = '#FFFFFF'
+    if (f.dead) return
+    f.dead = true
+    f.style = '#0088FF'
+    f.vx = 0
+    if (f.vy < 0)
+        f.vy = -f.vy / 2
+    else
+        f.vy = 0
 }
 
 function stepGame() {
-    if (tick % 20 == 0)
+    if (tick % 60 == 0)
         figures.push(randomFigure())
     tick++
     for (let f of figures) {
-        let { miny } = f.getBounds()
-        if (miny < FLOOR_CEILING)
+        let { miny, maxy } = f.getBounds()
+        if (miny < FLOOR_CEILING || maxy > height - FLOOR_CEILING)
             figureFail(f)
         f.step()
     }
