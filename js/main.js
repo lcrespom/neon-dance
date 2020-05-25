@@ -76,12 +76,10 @@ function drawGame() {
 }
 
 function animateFrame(t) {
-    let t1 = performance.now()
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
     stepGame()
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawGame()
     requestAnimationFrame(animateFrame)
-    let t2 = performance.now()
 }
 
 
