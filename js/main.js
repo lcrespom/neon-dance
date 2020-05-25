@@ -1,4 +1,5 @@
 import { Figure } from './figure.js'
+import { neonSegment } from './draw.js'
 
 const GRAVITY = -0.1
 const RADIUS = 40
@@ -66,9 +67,21 @@ function stepGame() {
     figures = figures.filter(f => f.cy > 0)
 }
 
+function drawFloorAndCeiling() {
+    neonSegment(ctx, {
+        x1: 0, y1: 40, x2: width, y2: 40,
+        style: '#FFFFFF', glow: { width: 6, blur: 5 }
+    })
+    neonSegment(ctx, {
+        x1: 0, y1: height - 40, x2: width, y2: height - 40,
+        style: '#FFFFFF', glow: { width: 6, blur: 5 }
+    })
+}
+
 function drawGame() {
     for (let f of figures)
         f.draw(ctx)
+    drawFloorAndCeiling()
 }
 
 function animateFrame() {

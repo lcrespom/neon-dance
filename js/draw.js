@@ -1,14 +1,41 @@
+const LINE_WIDTH = 2
+
+
 /**
  * 
  * @param {CanvasRenderingContext2D} ctx
- * @param {number} cx
- * @param {number} cy
- * @param {number} r
- * @param {number} sides
- * @param {number} angle
  * @param {any} style
+ * @param {object} glow
+ * @param {Function} drawFunction
  */
-export function drawPoly(ctx, cx, cy, r, sides, angle) {
+export function neonFigure(ctx, style, glow, drawFunction) {
+    ctx.strokeStyle = style
+    ctx.lineWidth = glow.width
+    ctx.filter = `blur(${glow.blur}px)`
+    drawFunction()
+    ctx.lineWidth = LINE_WIDTH
+    ctx.filter = 'none'
+    drawFunction()
+
+}
+
+export function neonPoly(ctx, { cx, cy, r, segments, angle, style, glow }) {
+    neonFigure(ctx, style, glow, _ => {
+        drawPoly(ctx, cx, cy, r, segments, angle)
+    })
+}
+
+export function neonSegment(ctx, { x1, y1, x2, y2, style, glow }) {
+    neonFigure(ctx, style, glow, _ => {
+        ctx.beginPath()
+        ctx.moveTo(x1, y1)
+        ctx.lineTo(x2, y2)
+        ctx.stroke()        
+    })
+}
+
+
+function drawPoly(ctx, cx, cy, r, sides, angle) {
     let angleInc = 2 * Math.PI / sides
     angle += Math.PI / 2 + angleInc / 2
     ctx.beginPath()
@@ -21,18 +48,6 @@ export function drawPoly(ctx, cx, cy, r, sides, angle) {
     }
     ctx.closePath()
     ctx.stroke()
-}
-
-export function neonPoly(ctx, { cx, cy, r, segments, angle, style, glow }) {
-    ctx.save()
-    ctx.strokeStyle = style
-    ctx.lineWidth = glow.width
-    ctx.filter = `blur(${glow.blur}px)`
-    drawPoly(ctx, cx, cy, r, segments, angle)
-    ctx.lineWidth = 2
-    ctx.filter = 'none'
-    drawPoly(ctx, cx, cy, r, segments, angle)
-    ctx.restore()
 }
 
 function pointAtAngle(x, y, r, angle) {
