@@ -73,7 +73,7 @@ function figureFail(f) {
 function stepGame() {
     if (tick % Math.floor(dropPeriod) == 0)
         figures.push(randomFigure())
-    if (dropPeriod > 4) dropPeriod -= 0.1
+    if (dropPeriod > 15) dropPeriod -= 0.01
     tick++
     for (let f of figures) {
         let { miny, maxy } = f.getBounds()
@@ -102,24 +102,6 @@ function drawGame() {
     drawFloorAndCeiling()
 }
 
-
-let lastt = 0
-let fpss = []
-function calcFPS(t, t1, t2) {
-    let fps = 1000 / (t - lastt)
-    lastt = t
-    fpss.push(fps)
-    if (fpss.length >= 60) {
-        let avg = Math.floor(fpss.reduce((sum, v) => sum + v) / 60)
-        let prd = Math.round(dropPeriod)
-        document.getElementById('info').innerHTML =
-            `FPS: ${avg}<br>
-            Figures: ${figures.length}<br>
-            Drop: ${prd}<br>
-            Step time: ${((t2 - t1)).toFixed(2)}`
-        fpss = []
-    }
-}
 function animateFrame(t) {
     let t1 = performance.now()
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -127,7 +109,6 @@ function animateFrame(t) {
     drawGame()
     requestAnimationFrame(animateFrame)
     let t2 = performance.now()
-    calcFPS(t, t1, t2)
 }
 
 
