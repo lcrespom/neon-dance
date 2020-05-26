@@ -25,7 +25,7 @@ function getFigureStyle(segments) {
 function randomFigure() {
     let left = Math.random() < 0.5
     let cx = left ? 0 : width
-    let cy = 250 + Math.random() * (height - 500)
+    let cy = 270 + Math.random() * (height - 500)
     let vx = 1 + Math.random() * 2
     if (!left) vx = -vx
     let vy = - 2 - Math.random() * 4
@@ -40,9 +40,6 @@ function randomFigure() {
 
 
 function handleKeyDown(evt) {
-    // let key2segments = { 'f': 3, 'j': 4, 'd': 5, 'k': 6 }
-    // let segments = key2segments[evt.key]
-    //if (!segments) return
     let key = evt.key.toUpperCase()
     let lowestF = { cy: 0 }
     for (let f of figures) {

@@ -1,13 +1,13 @@
 import { neonSegment } from './draw.js'
 
 export const FLOOR = 30
-export const CEILING = 30
-
+export const CEILING = 50
+let lives = 5
 
 export function stepBoard(figures, height) {
     for (let f of figures) {
         let { miny, maxy } = f.getBounds()
-        if (miny < FLOOR || maxy > height - CEILING)
+        if (miny < CEILING || maxy > height - FLOOR)
             figureFail(f)
     }
 }
@@ -24,10 +24,12 @@ export function drawBoard(ctx, tick) {
         x1: 0, y1: height - FLOOR, x2: width, y2: height - FLOOR,
         style: '#FFFFFF', glow: { width: gloww, blur: 5 }
     })
+    drawScore(ctx)
 }
 
 function figureFail(f) {
     if (f.dead) return
+    lives--
     f.dead = true
     f.style = '#0088FF'
     f.vx = 0
@@ -35,4 +37,24 @@ function figureFail(f) {
         f.vy = -f.vy / 2
     else
         f.vy = 0
+}
+
+
+function drawScore(ctx) {
+    ctx.save()
+    ctx.font = '24px NeonClubMusic'
+    ctx.fillStyle = 'white'
+    ctx.fillText('Score', 45, 25)
+    ctx.fillText('Life', ctx.canvas.width - 35, 25)
+    ctx.textAlign = 'left'
+    ctx.fillStyle = '#FF55AA'
+    let score = '34.500'    //TODO
+    ctx.fillText(score, 110, 25)
+    let x = ctx.canvas.width - 95
+    ctx.fillStyle = '#66CCFF'
+    for (let i = 0; i < lives; i++) {
+        ctx.fillRect(x, 12, 15, 20)
+        x -= 18
+    }
+    ctx.restore()
 }
