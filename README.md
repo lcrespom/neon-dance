@@ -14,6 +14,7 @@ key to make them jump.
 - [x] Random key inside figure
 - [x] Increase difficulty over time
 - [ ] Score / life
+- [ ] Cooler font
 - [ ] Audio
     - [ ] Sound effects
     - [ ] Background music
