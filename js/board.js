@@ -2,7 +2,7 @@ import { neonSegment } from './draw.js'
 
 export const FLOOR = 30
 export const CEILING = 50
-let lives = 5
+export let lives = 5
 
 export function stepBoard(figures, height) {
     for (let f of figures) {
@@ -12,7 +12,7 @@ export function stepBoard(figures, height) {
     }
 }
 
-export function drawBoard(ctx, tick) {
+export function drawBoard(ctx, score, tick) {
     let width = ctx.canvas.width
     let height = ctx.canvas.height
     let gloww = 5 + 2 * Math.sin(tick / 5)
@@ -24,7 +24,7 @@ export function drawBoard(ctx, tick) {
         x1: 0, y1: height - FLOOR, x2: width, y2: height - FLOOR,
         style: '#FFFFFF', glow: { width: gloww, blur: 5 }
     })
-    drawScore(ctx)
+    drawScore(ctx, score)
 }
 
 function figureFail(f) {
@@ -40,7 +40,7 @@ function figureFail(f) {
 }
 
 
-function drawScore(ctx) {
+function drawScore(ctx, score) {
     ctx.save()
     ctx.font = '24px NeonClubMusic'
     ctx.fillStyle = 'white'
@@ -48,8 +48,7 @@ function drawScore(ctx) {
     ctx.fillText('Life', ctx.canvas.width - 35, 25)
     ctx.textAlign = 'left'
     ctx.fillStyle = '#FF55AA'
-    let score = '34.500'    //TODO
-    ctx.fillText(score, 110, 25)
+    ctx.fillText(score.toLocaleString(), 110, 25)
     let x = ctx.canvas.width - 95
     ctx.fillStyle = '#66CCFF'
     for (let i = 0; i < lives; i++) {

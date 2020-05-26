@@ -1,5 +1,5 @@
 import { Figure } from './figure.js'
-import { stepBoard, drawBoard } from './board.js'
+import { stepBoard, drawBoard, lives } from './board.js'
 
 const RADIUS = 40
 const MAX_DROP_PERIOD = 240
@@ -10,6 +10,7 @@ let ctx = canvas.getContext('2d')
 let figures = []
 let tick = 0
 let dropPeriod = MAX_DROP_PERIOD
+let score = 0
 
 
 function getFigureStyle(segments) {
@@ -40,14 +41,18 @@ function randomFigure() {
 
 
 function handleKeyDown(evt) {
+    if (lives <= 0)
+        location.reload()
     let key = evt.key.toUpperCase()
     let lowestF = { cy: 0 }
     for (let f of figures) {
         if (!f.dead && f.label == key && lowestF.cy < f.cy)
             lowestF = f
     }
-    if (lowestF)
+    if (lowestF.r) {
         lowestF.vy = -6
+        score += 50
+    }
 }
 
 function startGame() {
@@ -55,6 +60,11 @@ function startGame() {
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     document.body.addEventListener('keydown', handleKeyDown)
+}
+
+function gameOver() {
+    ctx.font = '50px NeonClubMusic'
+    ctx.fillText('GAME OVER', width / 2, height / 2)
 }
 
 function stepGame() {
@@ -66,20 +76,28 @@ function stepGame() {
     for (let f of figures) {
         f.step()
     }
-    figures = figures.filter(f => f.cy - RADIUS < height)
+    for (let f of figures)
+        if (f.cx - RADIUS >= width || f.cx + RADIUS <= 0)
+            score += 100
+    figures = figures.filter(f =>
+        f.cy - RADIUS < height &&
+        f.cx - RADIUS < width  && f.cx + RADIUS > 0)
 }
 
 function drawGame() {
     for (let f of figures)
         f.draw(ctx)
-    drawBoard(ctx, tick)
+    drawBoard(ctx, score, tick)
 }
 
 function animateFrame() {
     stepGame()
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawGame()
-    requestAnimationFrame(animateFrame)
+    if (lives <= 0)
+        gameOver()
+    else
+        requestAnimationFrame(animateFrame)
 }
 
 

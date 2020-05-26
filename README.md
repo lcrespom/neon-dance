@@ -13,10 +13,10 @@ key to make them jump.
 - [x] Draw key inside figure
 - [x] Random key inside figure
 - [x] Increase difficulty over time
-- [ ] Score / life
+- [x] Score / life
 - [x] Cooler font
+- [x] Game over
 - [ ] Audio
     - [ ] Sound effects
     - [ ] Background music
-- [ ] Help, game over, etc.
 - [ ] Center canvas
