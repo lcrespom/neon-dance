@@ -43,8 +43,6 @@ function randomFigure() {
 
 
 function handleKeyDown(evt) {
-    if (lives <= 0)
-        location.reload()
     let key = evt.key.toUpperCase()
     let lowestF = { cy: 0 }
     for (let f of figures) {
@@ -68,6 +66,7 @@ function startGame() {
 function gameOver() {
     ctx.font = '50px NeonClubMusic'
     ctx.fillText('GAME OVER', width / 2, height / 2)
+    document.body.addEventListener('click', _ => location.reload())
 }
 
 function stepGame() {
