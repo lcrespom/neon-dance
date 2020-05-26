@@ -54,7 +54,7 @@ function handleKeyDown(evt) {
 }
 
 function startGame() {
-    ctx.font = '24px sans-serif'
+    ctx.font = '24px SingleLine'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     document.body.addEventListener('keydown', handleKeyDown)
