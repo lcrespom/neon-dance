@@ -1,5 +1,6 @@
 import { Figure } from './figure.js'
 import { stepBoard, drawBoard, lives } from './board.js'
+import { playSound } from './audio.js'
 
 const RADIUS = 40
 const MAX_DROP_PERIOD = 240
@@ -24,6 +25,7 @@ function getFigureStyle(segments) {
 }
 
 function randomFigure() {
+    playSound('pop')
     let left = Math.random() < 0.5
     let cx = left ? 0 : width
     let cy = 270 + Math.random() * (height - 500)
@@ -52,6 +54,7 @@ function handleKeyDown(evt) {
     if (lowestF.r) {
         lowestF.vy = -6
         score += 50
+        playSound('boing')
     }
 }
 

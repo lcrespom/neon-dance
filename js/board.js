@@ -1,4 +1,5 @@
 import { neonSegment } from './draw.js'
+import { playSound } from './audio.js'
 
 export const FLOOR = 30
 export const CEILING = 50
@@ -30,6 +31,7 @@ export function drawBoard(ctx, score, tick) {
 function figureFail(f) {
     if (f.dead) return
     lives--
+    playSound('zap')
     f.dead = true
     f.style = '#0088FF'
     f.vx = 0
