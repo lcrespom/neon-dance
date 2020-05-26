@@ -17,11 +17,11 @@ export function drawBoard(ctx, tick) {
     let height = ctx.canvas.height
     let gloww = 5 + 1 * Math.sin(tick / 20)
     neonSegment(ctx, {
-        x1: 0, y1: FLOOR, x2: width, y2: FLOOR,
+        x1: 0, y1: CEILING, x2: width, y2: CEILING,
         style: '#FFFFFF', glow: { width: gloww, blur: 5 }
     })
     neonSegment(ctx, {
-        x1: 0, y1: height - CEILING, x2: width, y2: height - CEILING,
+        x1: 0, y1: height - FLOOR, x2: width, y2: height - FLOOR,
         style: '#FFFFFF', glow: { width: gloww, blur: 5 }
     })
 }

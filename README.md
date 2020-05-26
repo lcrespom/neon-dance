@@ -7,7 +7,8 @@ A videogama about dancing neon polygons.
     - [x] Bottom bar
     - [x] Top bar
     - [x] Figure destruction
-- [ ] Draw key inside figure
+- [x] Draw key inside figure
+- [ ] Random key inside figure
 - [ ] Audio
     - [ ] Sound effects
     - [ ] Background music

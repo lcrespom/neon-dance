@@ -1,8 +1,8 @@
 import { Figure } from './figure.js'
-import { CEILING, stepBoard, drawBoard } from './board.js'
+import { stepBoard, drawBoard } from './board.js'
 
 const RADIUS = 40
-const MAX_DROP_PERIOD = 60
+const MAX_DROP_PERIOD = 180
 
 let canvas = document.getElementById('canvas')
 let height = canvas.height, width = canvas.width
@@ -25,10 +25,10 @@ function getFigureStyle(segments) {
 function randomFigure() {
     let left = Math.random() < 0.5
     let cx = left ? 0 : width
-    let cy = 200 + Math.random() * (height - 392 - RADIUS - CEILING)
+    let cy = 250 + Math.random() * (height - 500)
     let vx = 1 + Math.random() * 2
     if (!left) vx = -vx
-    let vy = 2 + Math.random() * 4
+    let vy = - 2 - Math.random() * 4
     let vangle = 0.04 - Math.random() * 0.08
     let segments = 3 + Math.floor(Math.random() * 4)
     let segments2key = [ 0, 0, 0, 'F', 'J', 'D', 'K']
@@ -44,18 +44,19 @@ function handleKeyDown(evt) {
     let key2segments = { 'f': 3, 'j': 4, 'd': 5, 'k': 6 }
     let segments = key2segments[evt.key]
     if (!segments) return
-    let lowerF = { cy: 2 * height }
+    let lowestF = { cy: 0 }
     for (let f of figures) {
-        if (!f.dead && f.segments == segments && lowerF.cy > f.cy)
-            lowerF = f
+        if (!f.dead && f.segments == segments && lowestF.cy < f.cy)
+            lowestF = f
     }
-    if (lowerF)
-        lowerF.vy = 6
+    if (lowestF)
+        lowestF.vy = -6
 }
 
 function startGame() {
-    ctx.scale(1, -1)
-    ctx.translate(0, -height)
+    ctx.font = '24px sans-serif'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
     document.body.addEventListener('keydown', handleKeyDown)
 }
 
@@ -68,7 +69,7 @@ function stepGame() {
     for (let f of figures) {
         f.step()
     }
-    figures = figures.filter(f => f.cy + RADIUS > 0)
+    figures = figures.filter(f => f.cy - RADIUS < height)
 }
 
 function drawGame() {

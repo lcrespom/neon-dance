@@ -1,6 +1,6 @@
 import { neonPoly } from './draw.js'
 
-const GRAVITY = -0.1
+const GRAVITY = 0.1
 
 export class Figure {
     constructor({
@@ -32,11 +32,8 @@ export class Figure {
         // Draw Polygon
         this.points = neonPoly(ctx, this)
         // draw label
-        // ctx.font = '24px sans-serif'
-        // ctx.fillStyle = 'white'
-        // ctx.textAlign = 'center'
-        // ctx.textBaseline = 'middle'
-        // ctx.fillText(this.label, this.cx, this.cy)
+        ctx.fillStyle = 'white'
+        ctx.fillText(this.label, this.cx, this.cy)
     }
 
     getBounds() {
