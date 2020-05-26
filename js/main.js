@@ -2,7 +2,7 @@ import { Figure } from './figure.js'
 import { stepBoard, drawBoard } from './board.js'
 
 const RADIUS = 40
-const MAX_DROP_PERIOD = 180
+const MAX_DROP_PERIOD = 240
 
 let canvas = document.getElementById('canvas')
 let height = canvas.height, width = canvas.width
@@ -31,22 +31,22 @@ function randomFigure() {
     let vy = - 2 - Math.random() * 4
     let vangle = 0.04 - Math.random() * 0.08
     let segments = 3 + Math.floor(Math.random() * 4)
-    let segments2key = [ 0, 0, 0, 'F', 'J', 'D', 'K']
+    let label = String.fromCharCode(65 + 26 * Math.random())
     return new Figure({
         cx, cy, vx, vy, vangle,
-        r: RADIUS, segments, style: getFigureStyle(segments),
-        label: segments2key[segments]
+        r: RADIUS, segments, style: getFigureStyle(segments), label
     })
 }
 
 
 function handleKeyDown(evt) {
-    let key2segments = { 'f': 3, 'j': 4, 'd': 5, 'k': 6 }
-    let segments = key2segments[evt.key]
-    if (!segments) return
+    // let key2segments = { 'f': 3, 'j': 4, 'd': 5, 'k': 6 }
+    // let segments = key2segments[evt.key]
+    //if (!segments) return
+    let key = evt.key.toUpperCase()
     let lowestF = { cy: 0 }
     for (let f of figures) {
-        if (!f.dead && f.segments == segments && lowestF.cy < f.cy)
+        if (!f.dead && f.label == key && lowestF.cy < f.cy)
             lowestF = f
     }
     if (lowestF)

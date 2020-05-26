@@ -15,7 +15,7 @@ export function stepBoard(figures, height) {
 export function drawBoard(ctx, tick) {
     let width = ctx.canvas.width
     let height = ctx.canvas.height
-    let gloww = 5 + 1 * Math.sin(tick / 20)
+    let gloww = 5 + 2 * Math.sin(tick / 10)
     neonSegment(ctx, {
         x1: 0, y1: CEILING, x2: width, y2: CEILING,
         style: '#FFFFFF', glow: { width: gloww, blur: 5 }
