@@ -1,7 +1,8 @@
 const sounds = {
     pop: createSound('pop'),
     boing: createSound('boing'),
-    zap: createSound('zap')
+    zap: createSound('zap'),
+    gameover: createSound('gameover')
 }
 
 function createSound(name) {

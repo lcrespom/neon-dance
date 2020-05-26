@@ -66,6 +66,7 @@ function startGame() {
 function gameOver() {
     ctx.font = '50px NeonClubMusic'
     ctx.fillText('GAME OVER', width / 2, height / 2)
+    playSound('gameover')
     document.body.addEventListener('click', _ => location.reload())
 }
 
