@@ -1,19 +1,21 @@
 # Neon Dance
-A videogama about dancing neon polygons.
+A videogame about dancing neon polygons.
+
+Avoid polygons from hitting the floor or ceiling by pressing the corresponding
+key to make them jump.
 
 
 ## ToDo
-- [ ] Horizontal bars
+- [x] Horizontal bars
     - [x] Bottom bar
     - [x] Top bar
     - [x] Figure destruction
 - [x] Draw key inside figure
 - [x] Random key inside figure
+- [x] Increase difficulty over time
+- [ ] Score / life
 - [ ] Audio
     - [ ] Sound effects
     - [ ] Background music
-- [ ] Score
-- [x] Increase difficulty over time
-- [ ] Center canvas
 - [ ] Help, game over, etc.
-- [ ] Detect skipped frames and update figure position accordingly
+- [ ] Center canvas
