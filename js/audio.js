@@ -1,14 +1,13 @@
-const sounds = {
-    pop: createSound('pop'),
-    boing: createSound('boing'),
-    zap: createSound('zap'),
-    gameover: createSound('gameover')
-}
+let soundNames = 'pop boing zap gameover'
+let sounds = {}
 
-function createSound(name) {
-    return new Howl({
-        src: [`audio/${name}.mp3`]
-    })
+function createSounds() {
+    let names = soundNames.split(' ')
+    for (let name of names) {
+        sounds[name] = new Howl({
+            src: [`audio/${name}.mp3`]
+        })
+    }
 }
 
 export function playSound(name) {
@@ -16,3 +15,5 @@ export function playSound(name) {
     if (!sound) return
     sound.play()
 }
+
+createSounds()
