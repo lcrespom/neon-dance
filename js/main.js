@@ -116,7 +116,7 @@ function animateFrame() {
 }
 
 function calculateSpeed() {
-  let count = 30
+  let count = 31
   let startTime = 0
 
   function frame() {
